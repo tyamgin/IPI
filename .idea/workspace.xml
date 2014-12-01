@@ -51,7 +51,7 @@
       <file leaf-file-name="article.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/article.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="26" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
+            <state line="45" column="38" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#24#43#0" expanded="true" />
               </folding>
@@ -62,7 +62,7 @@
       <file leaf-file-name="http_compare_server.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/http_compare_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="25" selection-start="400" selection-end="400" vertical-scroll-proportion="0.6236842">
+            <state line="126" column="29" selection-start="4073" selection-end="4073" vertical-scroll-proportion="0.55263156">
               <folding>
                 <element signature="e#25#56#0" expanded="true" />
               </folding>
@@ -424,7 +424,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/article.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="26" selection-start="397" selection-end="397" vertical-scroll-proportion="0.0">
+        <state line="45" column="38" selection-start="1308" selection-end="1308" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#24#43#0" expanded="true" />
           </folding>
@@ -433,7 +433,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/http_compare_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="25" selection-start="400" selection-end="400" vertical-scroll-proportion="0.6236842">
+        <state line="126" column="29" selection-start="4073" selection-end="4073" vertical-scroll-proportion="0.55263156">
           <folding>
             <element signature="e#25#56#0" expanded="true" />
           </folding>
