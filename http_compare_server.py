@@ -49,11 +49,19 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             Article.shingleLength = defaultShingleLength
         text1 = text1.decode('utf-8')
         text2 = text2.decode('utf-8')
+
         article1 = Article(text1)
         article2 = Article(text2)
-        Article.compare(article1, article2)
-        html1 = article1.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
-        html2 = article2.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        ShinglesComparer().compare(article1, article2)
+        htmlShingles1 = article1.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        htmlShingles2 = article2.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+
+        article1 = Article(text1)
+        article2 = Article(text2)
+        IMatchComparer().compare(article1, article2)
+        htmlIMatch1 = article1.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        htmlIMatch2 = article2.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+
         out = u"""
 <html>
 	<head>
@@ -96,7 +104,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         out += u"""
             </select>
 			<table width="96%">
-				<tr>
+			    <tr>
 					<td>
 						<textarea name="text1" cols="90" rows="10">""" + text1 + u"""</textarea>
 					</td>
@@ -104,15 +112,25 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 						<textarea name="text2" cols="90" rows="10">""" + text2 + u"""</textarea>
 					</td>
 				</tr>
+				<tr><td><h1>Результаты метода шинглов</h1><td></tr>
 				<tr>
 					<td>
-						<div style="background-color: ghostwhite;">""" + html1 + u"""</div>
+						<div style="background-color: ghostwhite;">""" + htmlShingles1 + u"""</div>
 					</td>
 					<td>
-						<div style="background-color: ghostwhite;">""" + html2 + u"""</div>
+						<div style="background-color: ghostwhite;">""" + htmlShingles2 + u"""</div>
 					</td>
 				</tr>
-			</table
+				<tr><td><h1>Результаты метода I-Match</h1><td></tr>
+				<tr>
+					<td>
+						<div style="background-color: ghostwhite;">""" + htmlIMatch1 + u"""</div>
+					</td>
+					<td>
+						<div style="background-color: ghostwhite;">""" + htmlIMatch2 + u"""</div>
+					</td>
+				</tr>
+			</table>
 		</form>
 	</body>
 </html>"""
