@@ -52,50 +52,25 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         article1 = Article(text1)
         article2 = Article(text2)
-        ShinglesComparer().compare(article1, article2)
-        htmlShingles1 = article1.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
-        htmlShingles2 = article2.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        ShinglesComparer.compare(article1, article2)
+        htmlShingles1 = article1.getColoredText('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        htmlShingles2 = article2.getColoredText('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
 
         article1 = Article(text1)
         article2 = Article(text2)
-        IMatchComparer().compare(article1, article2)
-        htmlIMatch1 = article1.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
-        htmlIMatch2 = article2.proc('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        IMatchComparer.compare(article1, article2)
+        htmlIMatch1 = article1.getColoredText('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
+        htmlIMatch2 = article2.getColoredText('<span style="background-color: yellow;">', '</span>').replace('\n', '<br>')
 
         out = u"""
 <html>
 	<head>
-		<style>
-			span.plug { background-color: red; }
-			textarea {
-				border-color: rgb(212,75,56);
-				padding: 8px;
-			}
-			.compare {
-				width: 99%;
-				color: #fff; /* цвет текста */
-				text-decoration: none; /* убирать подчёркивание у ссылок */
-				user-select: none; /* убирать выделение текста */
-				background: rgb(212,75,56); /* фон кнопки */
-				padding: .7em 1.5em; /* отступ от текста */
-				outline: none; /* убирать контур в Mozilla */
-			}
-			.compare:hover {
-				background: rgb(232,95,76);
-			} /* при наведении курсора мышки */
-			.compare:active {
-				background: rgb(152,15,0);
-			} /* при нажатии */
-			.select {
-			    padding: 6px;
-			    margin: 2px;
-			}
-		</style>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	    <meta http-equiv="content-type" content="text/html;charset=utf-8">"""
+        out += u'<style>' + fileGet('style/style.css').decode('utf8') + u"""</style>
 		<title> Антиплагиат для русского языка </title>
 	</head>
 	<body>
-		<form method="post" action="http://localhost:7777">
+		<form method="post" action="http://""" + HOST_NAME + u':' + str(PORT_NUMBER) + u"""">
 			<input class="compare" type="submit" value="Сравнить">
 			<label for="shingleLength">Длина шингла</label>
 			<select name="shingleLength" class="select">"""
@@ -140,7 +115,7 @@ if __name__ == '__main__':
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), MyHandler)
     print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
-    subprocess.call('start http://%s:%d' % (HOST_NAME, PORT_NUMBER), shell=True)
+    subprocess.call('start http://%s:%d' % (HOST_NAME, PORT_NUMBER), shell=True)  # открыть вкладку в браузере
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

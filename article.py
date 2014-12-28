@@ -22,16 +22,13 @@ class FrequencyMatrix:
         wordsSet = {a for a in self.words}
         for doc in docs:
             doc.words = {word: doc.words[word] for word in doc.words if word in wordsSet}
-            doc.wordsCount = sum(doc.words.values())
 
         self.matrix = [[doc.count(word) for doc in docs] for word in self.words]
         # https://ru.wikipedia.org/wiki/TF-IDF
         for i in range(len(self.words)):
             idf = math.log(1.0 * len(self.docs) / self.docCount[self.words[i]])
             for j in range(len(self.docs)):
-                #tf = 1.0 * self.matrix[i][j] / self.docs[j].wordsCount
-                tf = self.matrix[i][j]
-                self.matrix[i][j] = tf * idf
+                self.matrix[i][j] *= idf
 
     def write(self, file_path=None):
         stream = getOutput(file_path)
@@ -66,17 +63,14 @@ class Article:
         for key in self.words:
             print u'%20s %3s' % (key, self.words[key])
 
+    # TODO: highlight & getColoredText можно делать быстрее
     def highlight(self, sh):
         for m in re.finditer(sh, self.eText):
             rng = m.span()
             for i in range(rng[0], rng[1]):
                 self.isPlagiary[i] = True
 
-    def printShingles(self):
-        for s in self.shingles:
-            print ' '.join(s)
-
-    def proc(self, openTag, closeTag):
+    def getColoredText(self, openTag, closeTag):
         result = u''
         i = 0
         while i < len(self.text):
@@ -93,9 +87,15 @@ class Article:
                 i += 1
         return result
 
+    def printShingles(self):
+        for s in self.shingles:
+            print ' '.join(s)
+
+
 
 class IMatchComparer:
-    def compare(self, article1, article2):
+    @staticmethod
+    def compare(article1, article2):
         matrix = FrequencyMatrix()
         matrix.fillFromDocuments([article1, article2])
         matrix.write()
@@ -110,7 +110,8 @@ class IMatchComparer:
 
 
 class ShinglesComparer:
-    def compare(self, article1, article2):
+    @staticmethod
+    def compare(article1, article2):
         sh1 = {' +'.join(s) for s in article1.shingles}
         sh2 = {' +'.join(s) for s in article2.shingles}
         res = set()
